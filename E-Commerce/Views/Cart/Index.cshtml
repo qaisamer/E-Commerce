@@ -1,0 +1,98 @@
+﻿@model List<CartItem>
+@{
+}
+<h3>Cart </h3>
+
+<hr />
+@if (!Model.Any())
+{
+    <div class="alert alert-dismissible alert-warning">
+
+        <h4 class="alert-heading">No Products Yet!!!</h4>
+        <p> No Products are added To The Cart yet. </p>
+    </div>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+
+            <th scope="col">Quantity</th>
+            <th scope="col">Name</th>
+            <th scope="col">picture</th>
+            <th scope="col">Price</th>
+            <th scope ="col"> <i class="bi bi-plus-slash-minus"></i></th>
+
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model)
+    {
+        <tr class="table-active">
+            <td>@item.Quantity</td>
+            <td>@item.Product.Name</td>
+            <td><img src="~/assets/pictures/@item.Product.photo  " style="height:60px" /> </td>
+            
+            <td>(@item.Quantity * @item.Product.Price) jd</td> 
+            <td>
+                <a class="btn btn-success" asp-action="AddToCart" asp-route-Id="@item.ProductId"><i class="bi bi-plus-lg"></i></a>
+                <a class="btn btn-danger" asp-action="RemoveFromCart" asp-route-Id="@item.ProductId">
+                    <i class="bi bi-dash"></i>
+                </a>
+            </td>
+        </tr>
+    }
+        
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>Total: @ViewBag.Total jd</td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="d-flex justify-content-around">
+    <a class="btn btn-primary" asp-controller="Home" asp-action="Index">Continue Shopping</a>
+    <span id="PayPal"></span>
+</div>
+
+@section Scripts {
+    <script src="https://www.paypalobjects.com/api/checkout.js"></script>
+    <script>
+        var _total = @Html.Raw(ViewBag.Total);
+        paypal.Button.render({
+            //Configure Environment
+            env: 'sandbox',
+            client: {
+                sandbox: 'AZ8Bdx5gLjfjLW-Vh9oifgmgZ9daBoR_tDNWOIrW2JGDgjHq7gQ2keO228yJkEwABicsJPgLdfmFG87F'
+            },
+            //Customize Button (optional)
+            locale: 'en_US',
+            style: {
+                color: 'gold',
+                size: 'small',
+                shape: 'pill'
+            },
+            //Enable pay now checkout flow (optional)
+            commit: true,
+            //Setup a Payment
+            payment: function (data, actions) {
+                return actions.payment.create({
+                    transactions: [{
+                        amount: {
+                            total: _total,
+                            currency: 'USD'
+                        }
+                    }]
+                });
+            },
+            //Excute The Payment
+            onAuthorize: function (data, actions) {
+                return actions.payment.get().then(function () {
+                    var url = '@Url.Action("Checkout", "Cart", new { })';
+                    window.location.href = url;
+                });
+            }
+        }, "#PayPal")
+    </script>
+}

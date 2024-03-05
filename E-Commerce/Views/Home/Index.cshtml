@@ -1,0 +1,34 @@
+﻿@model  List<Category>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+@if (!Model.Any())
+{
+    <div class="alert alert-dismissible alert-warning">
+        
+        <h4 class="alert-heading">No Products Yet!!!</h4>
+        <p> No Products are added yet. </p>
+    </div>
+}
+else{
+    <div class="row mt-5">
+    @foreach(var c in Model)
+{
+ <div class="col-lg-4 col-md-6 ">
+                <div class="card mt-1" style="width: 18rem;">
+                    <img class="card-img-top" style="height:300px" src="~/assets/CategoryPics/@c.photo" alt="Card image cap">
+                    <div class="card-body">
+                        
+                        <h5 class="card-title">@c.Name</h5>
+                        <a asp-controller="" asp-action="Products" asp-route-Id="@c.Id" class="btn btn-primary"> Show Products</a>
+                    </div>
+                </div>
+ </div>
+}
+</div>
+
+
+}
+

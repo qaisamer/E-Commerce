@@ -1,0 +1,30 @@
+﻿@model CreatCategoryViewModel
+@{
+    ViewData["title"] = "Category";
+}
+<form method="post" enctype="multipart/form-data" asp-action="Creat">
+    <div class="row ">
+        <div class="col-3">
+        <div class="form-group mb-3">
+            <label asp-for="Name" class="form-label mt-4">Category Name</label>
+            <input asp-for="Name"  class="form-control" placeholder="Enter Category Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+            <div class="form-group mb-3">
+                <label asp-for="photo" class="form-label mt-4">Product photo</label>
+                <input asp-for="photo" type="file" class="form-control">
+                <span class="text-danger" asp-validation-for="photo"></span>
+            </div>
+        <button type="submit" class="btn btn-primary ">Add</button>
+    </div>
+        
+    </div>
+    
+</form>
+@section scripts{
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+}
+
+    

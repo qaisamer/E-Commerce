@@ -1,0 +1,46 @@
+﻿@model CreatProductViewModel
+@{
+    ViewData["title"] = "Creat Product";
+}
+<form method="post" enctype="multipart/form-data" asp-action="Creat">
+    <div class="row">
+        <div class="col-3">
+        <div class="form-group mb-1">
+            <label asp-for="Name" class="form-label mt-4">Product Name</label>
+                <input asp-for="Name" class="form-control" placeholder="Enter Product Name">
+                <span class="text-danger" asp-validation-for="Name"></span>
+        </div>
+            <div class="form-group mb-3">
+                <label asp-for="CategoryId" class="form-label mt-4">Category</label>
+                <select class="form-control" asp-for="CategoryId" asp-items="Model.catigories" >
+                    <option value="">Select a category </option>
+                </select>
+                <span class="text-danger" asp-validation-for="CategoryId"></span>
+            </div>
+        <div class="form-group mb-3">
+                <label asp-for="Price" class="form-label mt-4">Product Price</label>
+                <input asp-for="Price" class="form-control" placeholder="Enter Product Price">
+                <span class="text-danger" asp-validation-for="Price"></span>
+        </div>
+        <div class="form-group mb-3">
+                <label asp-for="Description" class="form-label mt-4">Product Description</label>
+            <input asp-for="Description" class="form-control" placeholder="Enter a Product Description">
+                <span class="text-danger" asp-validation-for="Description"></span>
+        </div>
+        <div class="form-group mb-3">
+                <label asp-for="photo" class="form-label mt-4">Product photo</label>
+            <input asp-for="photo" type="file" class="form-control">
+            <span class="text-danger" asp-validation-for="photo"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Product</button>
+        </div>
+    </div>
+
+</form>
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+
+
+
